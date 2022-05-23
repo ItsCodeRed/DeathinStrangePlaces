@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -174,11 +174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7917d0d539c3d44e97cb8ea21e19971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 5
-  extraJumpPower: 16
+  jumpPower: 20
+  extraJumpPower: 20
   extraJumpLength: 0.5
-  walkSpeed: 8
-  sprintSpeed: 15
+  movementSpeed: 12
 --- !u!114 &4904065211708874357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,4 +191,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 4904065211708874350}
-  maxHealth: 100

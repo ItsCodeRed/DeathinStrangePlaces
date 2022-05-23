@@ -8,8 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpPower = 10;
     public float extraJumpPower = 5;
     public float extraJumpLength = 0.5f;
-    public float walkSpeed = 8;
-    public float sprintSpeed = 15;
+    public float movementSpeed = 12;
 
     private Rigidbody2D body;
     private bool isGrounded;
@@ -24,17 +23,19 @@ public class PlayerMovement : MonoBehaviour
     {
         float verticalVel = body.velocity.y;
 
+        bool startJumping = Input.GetKeyDown(KeyCode.Space);
         bool isJumping = Input.GetKey(KeyCode.Space);
+        bool releaseJump = Input.GetKeyUp(KeyCode.Space);
 
+        if (startJumping && isGrounded)
+        {
+            extraJumpTimer = extraJumpLength;
+            verticalVel = jumpPower;
+            isGrounded = false;
+        }
         if (isJumping)
         {
-            if (isGrounded)
-            {
-                extraJumpTimer = extraJumpLength;
-                verticalVel = jumpPower + extraJumpPower;
-                isGrounded = false;
-            }
-            else if (extraJumpTimer > 0)
+            if (extraJumpTimer > 0)
             {
                 verticalVel += extraJumpPower * Time.deltaTime;
                 extraJumpTimer -= Time.deltaTime;
@@ -42,6 +43,13 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 extraJumpTimer = 0;
+            }
+        }
+        if (releaseJump)
+        {
+            if (verticalVel > 0 && extraJumpTimer > 0)
+            {
+                verticalVel *= 0.5f;
             }
         }
 
@@ -57,10 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float HorizontalMovement()
     {
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift);
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        return horizontalInput * (isSprinting ? sprintSpeed : walkSpeed);
+        return Input.GetAxisRaw("Horizontal") * movementSpeed;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
