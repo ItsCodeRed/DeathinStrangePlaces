@@ -5,8 +5,10 @@ using TMPro;
 
 public class Gravestone : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TMP_Text text;
     [SerializeField] private float fallSpeed = 5f;
+    [SerializeField] private float slowDist = 5f;
+    [SerializeField] private float minSlowSpeed = 0.2f;
 
     public bool isFalling = true;
     private float targetY = 0;
@@ -30,7 +32,8 @@ public class Gravestone : MonoBehaviour
 
         if (transform.position.y > targetY)
         {
-            transform.Translate(0, -fallSpeed * Time.fixedDeltaTime, 0);
+            float additionalSlow = Mathf.Max(fallSpeed * Mathf.Max(1 - (transform.position.y - targetY) / slowDist, 0), minSlowSpeed);
+            transform.Translate(0, (-fallSpeed + additionalSlow) * Time.fixedDeltaTime, 0);
         }
         else if (transform.position.y < targetY)
         {
