@@ -5,17 +5,20 @@ TagManager:
   serializedVersion: 2
   tags:
   - Death
+  - Enemy
+  - Gravestone
+  - Crusher
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - StoneRay
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Destructable
+  - Enemy
+  - Shot
+  - EnemyTrigger
   - 
   - 
   - 
@@ -44,4 +47,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 286304635
     locked: 0

@@ -5,10 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float jumpPower = 10;
-    public float extraJumpPower = 5;
-    public float extraJumpLength = 0.5f;
-    public float movementSpeed = 12;
+    [SerializeField] private float jumpPower = 10;
+    [SerializeField] private float extraJumpPower = 5;
+    [SerializeField] private float extraJumpLength = 0.5f;
+    [SerializeField] private float movementSpeed = 12;
+    [SerializeField] private float movementThreshold = 0.05f;
 
     private Rigidbody2D body;
     private bool isGrounded;
@@ -17,6 +18,16 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+    }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public bool IsMoving()
+    {
+        return Mathf.Abs(Input.GetAxisRaw("Horizontal")) > movementThreshold;
     }
 
     private void Update()
