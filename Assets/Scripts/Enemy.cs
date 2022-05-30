@@ -75,6 +75,22 @@ public class Enemy : Breakable
 
         return hit.transform == null ? (false, 0) : (hit.transform.CompareTag("Player"), hit.distance);
     }
+
+    public virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Death"))
+        {
+            Break();
+        }
+    }
+
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.isTrigger && collision.gameObject.CompareTag("Death"))
+        {
+            Break();
+        }
+    }
 }
 
 public enum EyeState

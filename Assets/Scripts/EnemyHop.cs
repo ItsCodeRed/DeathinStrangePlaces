@@ -14,9 +14,12 @@ public class EnemyHop : Enemy
     [SerializeField] private float hopLength = 1f;
     [SerializeField] private float hopDist = 1f;
     [SerializeField] private float hopHeight = 10f;
+    [SerializeField] private AudioSource hopSound;
+    [SerializeField] private AudioSource impactSound;
 
     private bool previouslyAgroed = false;
     private bool runningRoutine = false;
+    private float lastImpact = 0;
 
     public override void Awake()
     {
@@ -39,6 +42,7 @@ public class EnemyHop : Enemy
             }
         }
         previouslyAgroed = isAgro;
+        lastImpact += Time.deltaTime;
     }
 
     private IEnumerator SupriseRoutine()
@@ -47,6 +51,7 @@ public class EnemyHop : Enemy
         Vector2 pos = PlayerManager.singleton.player != null ? PlayerManager.singleton.player.transform.position : transform.position;
         float horizontalDirection = Mathf.Sign(transform.position.x - pos.x);
         body.velocity = new Vector2(horizontalDirection * supriseSpeed, supriseHeight);
+        hopSound.Play();
 
         yield return new WaitForSeconds(supriseLength);
 
@@ -71,9 +76,20 @@ public class EnemyHop : Enemy
         Vector2 pos = PlayerManager.singleton.player != null ? PlayerManager.singleton.player.transform.position : transform.position;
         float horizontalDirection = Mathf.Sign(pos.x - transform.position.x);
         body.velocity = new Vector2(horizontalDirection * hopDist, hopHeight);
+        hopSound.Play();
 
         yield return new WaitForSeconds(hopLength);
 
         runningRoutine = false;
+    }
+
+    public override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (lastImpact > 0.25f)
+        {
+            lastImpact = 0;
+            impactSound.Play();
+        }
     }
 }

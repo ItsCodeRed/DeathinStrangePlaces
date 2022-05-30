@@ -9,6 +9,8 @@ public class BigEnemy : ResetOnDeath
     private Rigidbody2D body;
     private float speed = 0;
 
+    [SerializeField] private AudioSource bossMusic;
+    [SerializeField] private AudioSource impactSound;
     [SerializeField] private Animation bossAnim;
     [SerializeField] private GameObject bossTrigger;
     [SerializeField] private GameObject[] escapePlatforms;
@@ -84,10 +86,23 @@ public class BigEnemy : ResetOnDeath
         }
     }
 
+    public void PlaySound()
+    {
+        impactSound.Play();
+    }
+
+    public void BossMusic()
+    {
+        bossMusic.Play();
+        Song.instance.Disable();
+    }
+
     public override void ResetObject()
     {
         base.ResetObject();
         bossAnim.Stop();
         SetSpeed(0);
+        bossMusic.Stop();
+        Song.instance.Enable();
     }
 }

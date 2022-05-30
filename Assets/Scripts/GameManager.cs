@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
 
+    [SerializeField] private AudioSource[] ambience;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Animation levelCompleteAnimation;
     [SerializeField] private TextMeshProUGUI timeText;
@@ -67,5 +68,13 @@ public class GameManager : MonoBehaviour
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
         pauseMenu.SetActive(paused);
+        foreach (AudioSource amb in ambience)
+        {
+            amb.enabled = !paused;
+        }
+        if (PlayerManager.singleton.player != null)
+        {
+            PlayerManager.singleton.player.stepSounds.loop = !paused;
+        }
     }
 }

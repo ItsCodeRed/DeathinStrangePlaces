@@ -12,10 +12,16 @@ public class AnimationTrigger : MonoBehaviour
     private List<AnimationState> exitAnims;
 
     [SerializeField] private bool resetOnDeath = false;
+
+    private GameObject toucher;
+
     private bool enterAnimPlaying = false;
+    private bool hasStarted = false;
+    private AudioSource sound;
 
     private void Awake()
     {
+        sound = GetComponent<AudioSource>();
         SetupAnimations();
     }
 
@@ -25,9 +31,17 @@ public class AnimationTrigger : MonoBehaviour
         exitAnims = new List<AnimationState>(exitAnimations);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (enterAnims.Count == 0) return;
+        if (!hasStarted)
+        {
+            hasStarted = true;
+            return;
+        }
+
+        if (enterAnims.Count == 0 || enterAnimPlaying || toucher != null || collision.isTrigger) return;
+
+        toucher = collision.gameObject;
 
         for (int i = enterAnims.Count - 1; i >= 0; i--)
         {
@@ -38,7 +52,7 @@ public class AnimationTrigger : MonoBehaviour
                 continue;
             }
 
-            if ((!anim.important && anim.animation.isPlaying) || enterAnimPlaying)
+            if (enterAnimPlaying || (!anim.important && anim.animation.isPlaying))
             {
                 continue;
             }
@@ -55,7 +69,9 @@ public class AnimationTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (exitAnims.Count == 0) return;
+        if (exitAnims.Count == 0 || !enterAnimPlaying || toucher == null || collision.gameObject != toucher || collision.isTrigger) return;
+
+        toucher = null;
 
         for (int i = exitAnims.Count - 1; i >= 0; i--)
         {
@@ -66,7 +82,7 @@ public class AnimationTrigger : MonoBehaviour
                 continue;
             }
 
-            if ((!anim.important && anim.animation.isPlaying) || !enterAnimPlaying)
+            if ((!anim.important && anim.animation.isPlaying))
             {
                 continue;
             }
@@ -81,13 +97,18 @@ public class AnimationTrigger : MonoBehaviour
         enterAnimPlaying = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (resetOnDeath && PlayerManager.singleton.player == null && !AreAnimationsComplete())
         {
             SetupAnimations();
             enterAnimPlaying = false;
         }
+    }
+
+    public void PlaySound()
+    {
+        sound.Play();
     }
 
     private bool AreAnimationsComplete()

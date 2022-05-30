@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Win : MonoBehaviour
 {
+    [SerializeField] private GameObject[] ambience;
+    [SerializeField] private AudioSource winSound;
     [SerializeField] private float ascendAccel = 5f;
     [SerializeField] private float ascendSpeed = 5f;
 
@@ -16,6 +18,12 @@ public class Win : MonoBehaviour
     {
         if (!hasWon && collision.gameObject.CompareTag("Player"))
         {
+            winSound.Play();
+            foreach (GameObject amb in ambience)
+            {
+                amb.SetActive(false);
+            }
+            Song.instance.Disable();
             playingAnimation = true;
             PlayerManager.singleton.player.Ascend();
             player = PlayerManager.singleton.player.transform;

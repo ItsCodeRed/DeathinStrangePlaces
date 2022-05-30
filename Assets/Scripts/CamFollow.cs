@@ -42,6 +42,6 @@ public class CamFollow : MonoBehaviour
         }
         pos = new Vector2(Mathf.Clamp(pos.x, minX, maxX), Mathf.Clamp(pos.y, minY, maxY));
 
-        transform.position = (Vector3)pos - Vector3.forward * 10;
+        transform.position = (Vector3)pos - Vector3.forward * 3;
     }
 }

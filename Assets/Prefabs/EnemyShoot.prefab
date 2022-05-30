@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 9214706251158093656}
   - component: {fileID: 8651110981989448113}
   - component: {fileID: 3987174559109660719}
+  - component: {fileID: 3626670232940466185}
   m_Layer: 7
   m_Name: EnemyShoot
   m_TagString: Enemy
@@ -314,7 +315,7 @@ MonoBehaviour:
   - {x: 0.7528763, y: 0.0020275116, z: 0}
   m_ShapePathHash: -1811429803
   m_Mesh: {fileID: 0}
-  m_InstanceId: 51078
+  m_InstanceId: 73260
 --- !u!50 &8651110981989448113
 Rigidbody2D:
   serializedVersion: 4
@@ -348,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e0126c0e0153b419b73b2dd419c14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakParticles: {fileID: 179352604896493712, guid: a0e8c08cfc0f44a42becda1bc9105ffa, type: 3}
+  breakParticles: {fileID: 179352604896493712, guid: 83f84484501d21141be5b5eac45225d6, type: 3}
   eye: {fileID: 997634700526877429}
   eyeState: 2
   shakeAmount: 0.05
@@ -359,11 +360,108 @@ MonoBehaviour:
   minShakeTime: 0.1
   agroLineOfSight: 1
   deagroRange: 30
+  shootSound: {fileID: 3626670232940466185}
   shot: {fileID: 1152155590610847935, guid: ade33b82f9f7d4740b8be5fac3fdde7f, type: 3}
   wanderInterval: 1
   wanderDist: 0.5
   wanderSpeed: 2
   timeBetweenShots: 3
+--- !u!82 &3626670232940466185
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7049864242820298035}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 7c77b3005cf62ce44a8339d152b9f99c, type: 2}
+  m_audioClip: {fileID: 8300000, guid: dfaa03d4777a522488b13ee940847bc9, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8820782727786799717
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +534,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
   m_Color: {r: 0.6226415, g: 0, b: 0, a: 1}
   m_FlipX: 0

@@ -6,7 +6,7 @@ public class Breakable : MonoBehaviour
 {
     [SerializeField] private GameObject breakParticles;
 
-    public void Break()
+    public virtual void Break()
     {
         Instantiate(breakParticles, transform.position, transform.rotation);
         Destroy(gameObject);

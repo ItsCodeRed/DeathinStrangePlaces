@@ -6,6 +6,7 @@ public class EnemyShoot : Enemy
 {
     private Rigidbody2D body;
 
+    [SerializeField] private AudioSource shootSound;
     [SerializeField] private GameObject shot;
     [SerializeField] private float wanderInterval = 1;
     [SerializeField] private float wanderDist = 0.5f;
@@ -49,6 +50,7 @@ public class EnemyShoot : Enemy
         runningRoutine = true;
 
         yield return new WaitForSeconds(timeBetweenShots);
+        shootSound.Play();
         Instantiate(shot, transform.position, Quaternion.identity);
 
         runningRoutine = false;

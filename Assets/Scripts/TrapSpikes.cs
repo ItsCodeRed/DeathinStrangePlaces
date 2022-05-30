@@ -6,6 +6,7 @@ public class TrapSpikes : MonoBehaviour
 {
     [SerializeField] private Animation anim;
     [SerializeField] private Collider2D deathCollider;
+    [SerializeField] private AudioSource trapSound;
     private bool trapTriggered = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,7 +32,10 @@ public class TrapSpikes : MonoBehaviour
         anim.Play();
         deathCollider.enabled = true;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.1f);
+        trapSound.Play();
+
+        yield return new WaitForSeconds(1.4f);
 
         deathCollider.enabled = false;
 

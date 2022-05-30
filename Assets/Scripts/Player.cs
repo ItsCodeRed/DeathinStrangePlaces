@@ -7,9 +7,14 @@ public class Player : MonoBehaviour
     public PlayerMovement movement;
     public Animator animator;
     public Rigidbody2D body;
+    public AudioSource stepSounds;
+    public AudioSource jumpSound;
+    public AudioSource impactSound;
 
     private bool hasDied = false;
     private bool ascending = false;
+    private bool previouslyAirborne = false;
+    private float timeSinceLanding = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -38,12 +43,28 @@ public class Player : MonoBehaviour
 
     private void HandleAnimations()
     {
-        animator.SetBool("InAir", !movement.IsGrounded());
-        animator.SetBool("IsRunning", movement.IsMoving());
+        bool onGround = movement.IsGrounded();
+        bool isMoving = movement.IsMoving();
+
+        animator.SetBool("InAir", !onGround);
+        animator.SetBool("IsRunning", isMoving);
+        if (isMoving && onGround && !stepSounds.isPlaying)
+        {
+            stepSounds.Play();
+        }
+        stepSounds.loop = isMoving && onGround;
+        if (onGround && previouslyAirborne && timeSinceLanding > 0.25f)
+        {
+            impactSound.Play();
+            timeSinceLanding = 0;
+        }
+        timeSinceLanding += Time.fixedDeltaTime;
 
         float input = Input.GetAxisRaw("Horizontal");
         float scaleX = input < 0 ? -1 : input > 0 ? 1 : transform.localScale.x;
         transform.localScale = new Vector3(scaleX, 1, 1);
+
+        previouslyAirborne = !onGround;
     }
 
     public void Ascend()
@@ -54,5 +75,11 @@ public class Player : MonoBehaviour
         body.isKinematic = true;
         body.gravityScale = 0;
         body.velocity = Vector2.zero;
+        stepSounds.loop = false;
+    }
+
+    private void OnDisable()
+    {
+        stepSounds.loop = false;
     }
 }

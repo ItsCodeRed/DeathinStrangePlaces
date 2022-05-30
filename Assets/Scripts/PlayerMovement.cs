@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float jumpPower = 10;
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed = 12;
     [SerializeField] private float movementThreshold = 0.05f;
 
+    private Player player;
     private Rigidbody2D body;
     private bool isGrounded;
     private float extraJumpTimer = 0;
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        player = GetComponent<Player>();
     }
 
     public bool IsGrounded()
@@ -43,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             extraJumpTimer = extraJumpLength;
             verticalVel = jumpPower;
             isGrounded = false;
+            player.jumpSound.Play();
         }
         if (isJumping)
         {

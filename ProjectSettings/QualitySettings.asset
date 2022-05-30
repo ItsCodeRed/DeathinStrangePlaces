@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 5
+  m_CurrentQuality: 0
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -21,7 +21,7 @@ QualitySettings:
     skinWeights: 1
     textureQuality: 1
     anisotropicTextures: 0
-    antiAliasing: 0
+    antiAliasing: 8
     softParticles: 0
     softVegetation: 0
     realtimeReflectionProbes: 0
@@ -40,7 +40,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: f4a7bad79a72a71428c338d024eca34d, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: f95d4cc17d7a2da47960ab2535cf6076, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Low
@@ -57,7 +57,7 @@ QualitySettings:
     skinWeights: 2
     textureQuality: 0
     anisotropicTextures: 0
-    antiAliasing: 0
+    antiAliasing: 8
     softParticles: 0
     softVegetation: 0
     realtimeReflectionProbes: 0
@@ -76,7 +76,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 3c4a1c904b989d647a2bac2d98198e1a, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: f95d4cc17d7a2da47960ab2535cf6076, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Medium
@@ -93,7 +93,7 @@ QualitySettings:
     skinWeights: 2
     textureQuality: 0
     anisotropicTextures: 1
-    antiAliasing: 0
+    antiAliasing: 8
     softParticles: 0
     softVegetation: 0
     realtimeReflectionProbes: 0
@@ -112,7 +112,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: b941953069dbca34696bf30abb2f037d, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: f95d4cc17d7a2da47960ab2535cf6076, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: High
@@ -129,7 +129,7 @@ QualitySettings:
     skinWeights: 2
     textureQuality: 0
     anisotropicTextures: 1
-    antiAliasing: 0
+    antiAliasing: 8
     softParticles: 0
     softVegetation: 1
     realtimeReflectionProbes: 1
@@ -148,7 +148,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 462b771f501b32c47bc7ff18d1893504, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: f95d4cc17d7a2da47960ab2535cf6076, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Very High
@@ -165,7 +165,7 @@ QualitySettings:
     skinWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
-    antiAliasing: 2
+    antiAliasing: 8
     softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
@@ -184,7 +184,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: b8bb3c6a8b371ae4381c0f366b624c83, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: f95d4cc17d7a2da47960ab2535cf6076, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra

@@ -12,8 +12,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private GameObject deathParticles;
     [SerializeField] private Gravestone gravestone;
-    [SerializeField] private float graveDelay = 0.5f;
+    private float graveDelay = 0.25f;
     [SerializeField] private float graveImpactTime = 0.5f;
+    [SerializeField] private AudioSource deathSound;
 
     public Player player;
     public CamFollow cam;
@@ -43,6 +44,7 @@ public class PlayerManager : MonoBehaviour
         Vector2 playerPos = player.transform.position;
         Destroy(player.gameObject);
         Instantiate(deathParticles, playerPos, Quaternion.identity);
+        deathSound.Play();
 
         yield return new WaitForSeconds(graveDelay);
 

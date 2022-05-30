@@ -17,6 +17,8 @@ public class Gravestone : Breakable
     [SerializeField] private float timeToCrack = 1f;
     [SerializeField] private float timeToBreak = 2f;
     [SerializeField] private float shakeAmount = 0.4f;
+    [SerializeField] private AudioSource churchBell;
+    [SerializeField] private AudioSource impactSound;
 
     public bool isFalling = true;
     public bool impacted = false;
@@ -45,6 +47,10 @@ public class Gravestone : Breakable
     {
         ticks = ticks < 4 ? ticks + 1 : ticks;
         hasSpawned = ticks >= 4;
+        if (ticks == 3)
+        {
+            churchBell.Play();
+        }
 
         if (isStanding)
         {
@@ -86,11 +92,48 @@ public class Gravestone : Breakable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!collision.gameObject.CompareTag("Gravestone"))
+        {
+            body.velocity = Vector2.zero;
+        }
+
+        if (!isFalling) return;
+
+        Breakable breakable = collision.gameObject.GetComponent<Breakable>();
+        if (breakable != null && !collision.gameObject.CompareTag("Gravestone"))
+        {
+            breakable.Break();
+            if (!collision.gameObject.CompareTag("Enemy"))
+            {
+                Break();
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.isTrigger && collision.gameObject.CompareTag("Player"))
+        {
+            isStanding = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (!hasSpawned)
         {
             Break();
         }
 
+        if (collision.isTrigger && !collision.gameObject.CompareTag("Gravestone"))
+        {
+            return;
+        }
+
+        if (isFalling && !impacted)
+        {
+            impactSound.Play();
+        }
         impacted = true;
 
         if (!isFalling) return;
@@ -109,29 +152,6 @@ public class Gravestone : Breakable
         {
             isFalling = false;
             StartCoroutine(FreezeRoutine());
-        }
-        body.velocity = Vector2.zero;
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.isTrigger && collision.gameObject.CompareTag("Player"))
-        {
-            isStanding = true;
-        }
-        else
-        {
-            if (!isFalling) return;
-
-            Breakable breakable = collision.gameObject.GetComponent<Breakable>();
-            if (breakable != null && !collision.gameObject.CompareTag("Gravestone"))
-            {
-                breakable.Break();
-                if (!collision.gameObject.CompareTag("Enemy"))
-                {
-                    Break();
-                }
-            }
         }
     }
 
