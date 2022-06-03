@@ -11,11 +11,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float extraJumpLength = 0.5f;
     [SerializeField] private float movementSpeed = 12;
     [SerializeField] private float movementThreshold = 0.05f;
+    [SerializeField] private float extraGroundTime = 0.05f;
 
     private Player player;
     private Rigidbody2D body;
     private bool isGrounded;
     private float extraJumpTimer = 0;
+    private float groundTimer = 0;
 
     private void Awake()
     {
@@ -40,6 +42,15 @@ public class PlayerMovement : MonoBehaviour
         bool startJumping = Input.GetKeyDown(KeyCode.Space);
         bool isJumping = Input.GetKey(KeyCode.Space);
         bool releaseJump = Input.GetKeyUp(KeyCode.Space);
+
+        if (groundTimer > 0)
+        {
+            groundTimer -= Time.deltaTime;
+            if (groundTimer <= 0)
+            {
+                isGrounded = false;
+            }
+        }
 
         if (startJumping && isGrounded)
         {
@@ -88,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         if (!collision.isTrigger)
         {
             isGrounded = true;
+            groundTimer = 0;
         }
     }
 
@@ -95,7 +107,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!collision.isTrigger)
         {
-            isGrounded = false;
+            groundTimer = extraGroundTime;
+            if (extraGroundTime <= 0)
+            {
+                isGrounded = false;
+            }
         }
     }
 }

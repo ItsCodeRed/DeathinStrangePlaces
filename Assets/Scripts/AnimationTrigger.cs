@@ -13,10 +13,8 @@ public class AnimationTrigger : MonoBehaviour
 
     [SerializeField] private bool resetOnDeath = false;
 
-    private GameObject toucher;
+    private List<Collider2D> colliders = new List<Collider2D>();
 
-    private bool enterAnimPlaying = false;
-    private bool hasStarted = false;
     private AudioSource sound;
 
     private void Awake()
@@ -33,15 +31,11 @@ public class AnimationTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!hasStarted)
-        {
-            hasStarted = true;
-            return;
-        }
+        if (collision.isTrigger) return;
 
-        if (enterAnims.Count == 0 || enterAnimPlaying || toucher != null || collision.isTrigger) return;
+        colliders.Add(collision);
 
-        toucher = collision.gameObject;
+        if (enterAnims.Count == 0 || colliders.Count > 1) return;
 
         for (int i = enterAnims.Count - 1; i >= 0; i--)
         {
@@ -52,26 +46,27 @@ public class AnimationTrigger : MonoBehaviour
                 continue;
             }
 
-            if (enterAnimPlaying || (!anim.important && anim.animation.isPlaying))
+            if (!anim.important && anim.animation.isPlaying)
             {
                 continue;
             }
 
-            anim.animation.Blend(anim.name);
+            anim.animation.CrossFade(anim.name);
 
             if (anim.playOnce)
             {
                 enterAnims.RemoveAt(i);
             }
         }
-        enterAnimPlaying = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (exitAnims.Count == 0 || !enterAnimPlaying || toucher == null || collision.gameObject != toucher || collision.isTrigger) return;
+        if (!colliders.Contains(collision)) return;
 
-        toucher = null;
+        colliders.Remove(collision);
+
+        if (exitAnims.Count == 0 || colliders.Count > 0) return;
 
         for (int i = exitAnims.Count - 1; i >= 0; i--)
         {
@@ -82,19 +77,18 @@ public class AnimationTrigger : MonoBehaviour
                 continue;
             }
 
-            if ((!anim.important && anim.animation.isPlaying))
+            if (!anim.important && anim.animation.isPlaying)
             {
                 continue;
             }
 
-            anim.animation.Blend(anim.name);
+            anim.animation.CrossFade(anim.name);
 
             if (anim.playOnce)
             {
                 exitAnims.RemoveAt(i);
             }
         }
-        enterAnimPlaying = false;
     }
 
     private void FixedUpdate()
@@ -102,7 +96,16 @@ public class AnimationTrigger : MonoBehaviour
         if (resetOnDeath && PlayerManager.singleton.player == null && !AreAnimationsComplete())
         {
             SetupAnimations();
-            enterAnimPlaying = false;
+        }
+        if (colliders.Count > 0)
+        {
+            for (int i = colliders.Count - 1; i >= 0; i--)
+            {
+                if (colliders[i] == null)
+                {
+                    colliders.RemoveAt(i);
+                }
+            }
         }
     }
 
